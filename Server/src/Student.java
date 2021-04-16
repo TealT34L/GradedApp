@@ -1,11 +1,9 @@
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
+import com.example.gradedapp.hac.ClassRoom;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -42,7 +40,7 @@ public class Student implements Serializable{
         element.clear();
         //logging
         
-        //System.out.println("Please enter hac username");
+        //System.out.println("Please enter com.example.gradedapp.hac username");
         
         //element.sendKeys("DeJesus-Contreras.M.A");
         
@@ -50,7 +48,7 @@ public class Student implements Serializable{
         
         element = driver.findElement(By.name("LogOnDetails.Password"));
          
-        //System.out.println("Please enter hac password");
+        //System.out.println("Please enter com.example.gradedapp.hac password");
         
         //element.sendKeys("2735704G");
         element.sendKeys(password);
@@ -67,8 +65,9 @@ public class Student implements Serializable{
 	public void refresh() {
 
         //opening classes tab
-        driver.findElement(By.id("hac-Classes")).click();
-        driver.findElement(By.id("hac-Classes")).click();
+
+		driver.findElement(By.id("hac-Classes")).click();
+		driver.findElement(By.id("hac-Classes")).click();
         //switching to grades frame
         
         WebElement frame = driver.findElement(By.id("sg-legacy-iframe"));

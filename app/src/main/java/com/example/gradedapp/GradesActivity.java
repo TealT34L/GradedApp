@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.gradedapp.hac.ClassRoom;
-import com.example.gradedapp.hac.SStudent;
 
 import java.util.ArrayList;
 
@@ -66,7 +65,7 @@ public class GradesActivity extends AppCompatActivity {
 
         buttons.add((Button) findViewById(R.id.dynamicButton1));
 
-        classes = SStudent.getClasses();
+        classes = MainActivity.classes;
 
         for (int x = 0; x < classes.size(); x++){
             if (x!= 0){
@@ -100,16 +99,8 @@ public class GradesActivity extends AppCompatActivity {
                     changeByClass(classes.get(pos));
                 }
             });
+            System.out.println(classes.get(x).getName() + " " + c);
         }
-
-        /*
-        buttons.get(0).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createButton();
-            }
-        });
-        */
     }
 
     public void changeByClass(ClassRoom classRoom){

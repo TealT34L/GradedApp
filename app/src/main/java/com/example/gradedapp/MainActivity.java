@@ -9,16 +9,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.gradedapp.hac.SStudent;
+import com.example.gradedapp.hac.ClassRoom;
+//import com.example.gradedapp.com.example.gradedapp.hac.SStudent;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static ArrayList<ClassRoom> classes = new ArrayList<>();
 
     private EditText userName;
     private EditText password;
     private TextView info;
     private Button loginButton;
+    private volatile Client cl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         System.out.println("Trying to setup");
-        new SStudent().execute("setup");
 
         userName = (EditText)findViewById(R.id.edittextuser);
         password = (EditText)findViewById(R.id.edittextpass);
@@ -65,21 +69,27 @@ public class MainActivity extends AppCompatActivity {
     private void validataLogin(String userNameText, String passwordText) throws IOException, ClassNotFoundException {
         //if (checkpass) then:
         info.setText("Validating");
-        new SStudent().execute("validate", userNameText, passwordText);
+
+        cl = new Client(userNameText, passwordText);
+        ClientThreader clientThread = new ClientThreader(cl);
+        clientThread.start();
+
+
+
         long time = System.nanoTime();
         int num = 1;
         System.out.println("waiting for validity");
-        while(!SStudent.isValidationReady()){
+        while(!cl.getValidity()){
             info.setText("Validating");
         }
-        if (SStudent.getValidity()){
+        while(!cl.hasRefreshed()){
+            info.setText("Refreshing");
+        }
+
+        if (cl.getValidity()){
             System.out.println("Login worked");
             info.setText("Loading");
-            new SStudent().execute("refresh");
-            while(!SStudent.isRefreshReady()){
-                info.setText("Loading");
-            }
-            new SStudent().execute("close");
+            classes = cl.getClasses();
             Intent intent = new Intent(MainActivity.this, GradesActivity.class);
             startActivity(intent);
         } else {

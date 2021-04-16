@@ -49,7 +49,7 @@ public class UserThread extends Thread {
 						student.close();
 						outS.writeObject((student.getClasses()));
 						outS.writeObject((student.getOldClasses()));
-						System.out.println("Classes Read");
+						System.out.println("Classes Read " + student.getClasses().size() + " " + student.getOldClasses().size());
 					}
 					//close
 					if (inByte == 1) {
