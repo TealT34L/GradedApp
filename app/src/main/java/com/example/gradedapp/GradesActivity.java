@@ -34,13 +34,11 @@ public class GradesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grades);
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
+        Point size = new Point(this.getWindowManager().getCurrentWindowMetrics().getBounds().width(), this.getWindowManager().getCurrentWindowMetrics().getBounds().height());
+
         myLayout = (ConstraintLayout)findViewById(R.id.myLayout);
         veritcalLayout = (LinearLayout)findViewById(R.id.linearLayout);
         horizontalLayout = (LinearLayout)findViewById(R.id.bottomLayout);
-
 
         label = (TextView)findViewById(R.id.labelGrades);
         gradesButton = (Button)findViewById(R.id.gradesButton);
@@ -86,6 +84,7 @@ public class GradesActivity extends AppCompatActivity {
                 buttons.get(x).setText(classes.get(x).getName());
             }
             buttons.get(x).setBackgroundColor(c);
+            buttons.get(x).setOutlineAmbientShadowColor(Color.WHITE);
             Button b = buttons.get(x);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,8 +118,6 @@ public class GradesActivity extends AppCompatActivity {
         ));
         //secondButton.getLayout().
         veritcalLayout.addView(secondButton);
-
-
 
         buttons.add(secondButton);
     }
